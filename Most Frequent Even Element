@@ -1,0 +1,51 @@
+class Solution {
+public:
+//   static bool cmp(pair<int,int> a,pair<int,int> b){
+//       if(a.second==b.second){
+//          if(a.first<=b.second)
+//              return true;
+//       }
+//       if(a.second>b.second)
+//          return true;
+//          return false;
+//   }
+    int mostFrequentEven(vector<int>& nums) {
+        
+        unordered_map<int,int> m;
+          // storing the even number with their occurances
+          for(int val: nums){
+               if(val%2==0) m[val]++;
+          }
+          // if there is no any even number in the map return -1;
+        //     if(m.empty() )
+        //        return -1; 
+        //        // to use cmp store into pair of vector
+        // vector<pair<int,int>> v(m.begin(),m.end());
+        // sort(v.begin(),v.end(),cmp);
+        //   return v[0].first;
+
+         int count=INT_MIN;
+         int nmber=-1;
+
+         // eadge case
+         if(m.empty()) return -1;
+
+ // attempting for max occurance
+        for(auto itr=m.begin();itr!=m.end();itr++){
+            if(itr->second>=count)
+            {
+                count=itr->second;
+                nmber=itr->first;
+            }
+        }
+// attempting for min value with max occurance
+        for(auto itr=m.begin();itr!=m.end();itr++){
+            if(itr->second==count and itr->first<nmber)
+            {          
+                nmber= itr->first;
+            }
+        }
+
+        return nmber;
+    } 
+};
