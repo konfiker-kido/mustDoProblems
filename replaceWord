@@ -1,0 +1,26 @@
+
+Given a String, compute a new string where all appearances of "pi" have been replaced by "3.14"
+
+Input: xpix
+Output: x3.14x
+
+Input: xpipi
+Output: x3.143.14
+
+Input: xpixabcpid
+Output: x3.14xabc3.14d
+
+
+
+string replacePi(string str){
+    
+    for(int i=0;i<str.length()-1;i++){
+       
+        // Check for "pi" if found replace with 3.14
+        if(str[i]=='p' and str[i+1]=='i'){
+            string t="3.14";
+            str=str.substr(0,i)+t+str.substr(i+2,str.length());
+        }
+    }
+    return str;
+}
