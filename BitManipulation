@@ -1,1 +1,65 @@
 
+
+
+
+
+
+
+
+
+---------------------------------------( Brute force )------------------------------------------------------------------------------------------------------------
+
+class Solution {
+public:
+ 
+    int returnCountBits(string str){
+        int count=0;
+        for(char bits:str){
+            if(bits=='1')
+              count++;
+        }
+        return count;
+    }
+
+    string decToBinary(int num){
+        string ans="";
+        while(num!=1 and num!=0){
+            ans+=to_string(num%2);
+            num/=2;
+        }
+         ans+=to_string(num);
+        //  reverse(ans.begin(),ans.end());
+         return ans;
+    }
+
+    vector<int> countBits(int n) {
+        vector<int> ans;
+            for(int i=0;i<=n;i++){
+               string binary=decToBinary(i);
+               ans.push_back(returnCountBits(binary));
+            }
+
+            return ans;
+    }
+};
+
+-------------------------------------------(  Optimized code )-------------------------------------------------------------------------------------------
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        //vector<int> ans; 
+        // for(int i{};i<=n;i++)
+        //     ans.push_back(__builtin_popcount(i));
+        // return ans;
+
+        vector<int> ans(n+1);
+        int x{1};
+        for(int i{1};i<=n;i++)
+        {
+            if(i >= (x<<1))
+                x <<= 1;
+            ans[i] = 1 + ans[i-x];
+        }
+        return ans;
+    }
+};
