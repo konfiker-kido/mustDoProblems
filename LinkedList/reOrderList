@@ -1,1 +1,85 @@
+143. Reorder List
+Medium
 
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+Example:
+Input: head = [1,2,3,4]
+Output: [1,4,2,3]
+
+Input: head = [1,2,3,4,5]
+Output: [1,5,2,4,3]
+
+--------------------------------------------------------  Solution (C++) ----------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+  
+   ListNode* reverse(ListNode* temp){
+
+    ListNode* prev=NULL,*curr=temp;
+
+    while(curr){
+       ListNode* store=curr->next;
+       curr->next=prev;
+       prev=curr;   
+       curr=store;
+    }
+    return prev;
+   }
+
+   ListNode* findMidNext(ListNode* temp){
+     ListNode* fast=temp,*slow=temp;
+        while(fast->next!=NULL and fast->next->next!=NULL){          
+             fast=fast->next->next;
+             slow=slow->next;
+        }
+        return slow;
+   }
+
+    void reorderList(ListNode* head) {
+        
+        ListNode* temp=head;
+        ListNode* tillMid=head;     
+        
+
+        ListNode* afterMid=findMidNext(temp); 
+        ListNode* secondHalf=reverse(afterMid->next);
+        afterMid->next=NULL;
+        
+       // Joining Both List
+      ListNode* A=head;
+      ListNode* B=secondHalf;
+     
+     // Merge the 2 halves
+        while (A && B) {
+            // storing the next 
+            ListNode* A_next=A->next;
+            ListNode* B_next=B->next;
+
+         // joining the nodes
+            A->next=B;
+            B->next=A_next;
+            
+        // storing the next
+            A=A_next;
+            B=B_next;
+        }
+    }
+};
