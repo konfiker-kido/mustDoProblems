@@ -1,0 +1,55 @@
+3090. Maximum Length Substring With Two Occurrences
+Given a string s, return the maximum length of a substring
+such that it contains at most two occurrences of each character.
+ 
+Example 1:
+Input: s = "bcbbbcba"
+Output: 4
+
+
+----------------------------------------  Brute Force -----------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int maximumLengthSubstring(string s) {
+        
+        int n=s.size();
+        int maxLen=0; 
+        // for(int i=0;i<n;i++){       (remove all the commented part )
+        //    vector<int> alfa(26,0);
+        //     for(int j=i;j<n;j++){
+        //         char ch=s[j];
+        //         if(alfa[ch-'a']>=2){ break; }           
+        //         alfa[ch-'a']++;
+        //         maxLen=max(maxLen,(j-i+1));
+        //     }
+        // }
+
+        return maxLen;
+    }
+};
+
+
+---------------------------------------- Optimised Solution --------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int maximumLengthSubstring(string s) {
+        
+        int n=s.size();
+        int maxLen=0;
+       
+       int left=0,right=0;
+        vector<int> alfa(26,0);
+       
+       while(right<n){
+          alfa[s[right]-'a']++;   // storing the frequency of chars
+          while(alfa[s[right]-'a']>2){   // shrinking window from start if current char is more than 2 
+             alfa[s[left]-'a']--;
+             left++;
+          }
+          maxLen=max(maxLen,right-left+1); 
+          right++;
+       }
+
+        return maxLen;
+    }
+};
