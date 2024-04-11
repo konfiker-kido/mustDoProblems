@@ -80,3 +80,37 @@ public:
           return maxLength;
     }
 };
+
+
+
+Time Complexity O(N)+(N) = 0(2N)
+
+----------------------------------------------  Most Optimal Solution ---------------------------------------------------------------------------------------
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+          
+          int n=nums.size();
+          int maxLength=0;
+
+          int left=0,r=0;
+          int count_zero=0;
+          while(r<n){
+            if(nums[r]==0)
+               count_zero++;
+               // if zeros are more than k, we have to move our left pointer
+               if(count_zero>k){
+                  if(nums[left]==0) // checking the left to reduce zero
+                    --count_zero;
+                    left++;
+               }
+               
+               if(count_zero<=k) // we will not be updating our maxLength if count_zero is exceded
+                maxLength=max(maxLength,(r-left+1));// updating maxLength
+               r++;
+          }
+
+
+          return maxLength;
+    }
+};
