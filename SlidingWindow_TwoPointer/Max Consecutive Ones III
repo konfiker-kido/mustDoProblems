@@ -1,0 +1,82 @@
+1004. Max Consecutive Ones III
+Medium
+Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
+Output: 6
+Explanation: [1,1,1,0,0,1,1,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+Input: nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3
+Output: 10
+Explanation: [0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+
+-------------------------  Brute Force Solution -----------------------------------------------------------------------------------
+
+**Imp Note: find the longest subarray with at most k 0's
+-----------------------------------------------------------------
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+          
+
+          int maxLength=0;
+
+          for(int i=0;i<nums.size();i++){
+              
+              int count_zero=0;   // for every subarray we i'll start             
+              for(int j=i;j<nums.size();j++){
+                 
+                 if(nums[j]==0) // counting the zeros
+                   count_zero++;
+                 
+                  if(count_zero<=k){     // if zeros are less than or eqal to k       
+                      int len=(j-i+1);
+                      maxLength=max(maxLength,len); // we will be checking for max Length
+                  }else{
+                    
+                     break; // if zeros are more than k we have to break the loop
+                  }
+              }
+          }
+          return maxLength;
+    }
+};
+
+
+
+-----------------------------------  Optimised Solution  -------------------------------------------------------------------------------------------------------
+
+Note**: Intution is same as like Brute force, but here we have to just update the time complexity
+---------------------------------------------
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+          
+          int n=nums.size();
+          int maxLength=0;
+
+          int left=0,r=0;
+          int count_zero=0;
+          while(r<n){
+            if(nums[r]==0)
+               count_zero++;
+               // if zeros are more than k, we have to shrink the window
+               while(count_zero>k){
+                  if(nums[left]==0) // checking the left to reduce zero
+                    --count_zero;
+                    left++;
+               }
+
+               maxLength=max(maxLength,(r-left+1));// updating maxLength
+               r++;
+          }
+
+
+          return maxLength;
+    }
+};
