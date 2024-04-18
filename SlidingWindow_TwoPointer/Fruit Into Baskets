@@ -1,0 +1,100 @@
+904. Fruit Into Baskets
+
+Input: fruits = [1,2,1]
+Output: 3
+Explanation: We can pick from all 3 trees.
+
+Input: fruits = [0,1,2,2]
+Output: 3
+
+Input: fruits = [1,2,3,2,2]
+Output: 4
+Explanation: We can pick from trees [2,3,2,2].
+If we had started at the first tree, we would only pick from trees [1,2].
+
+-------------------------------------------  Brute Force Solution ------------------------------------------------------------------------------------------------
+trim down this question to " max length subarray with atmost 2 distinct element"
+---------------------------------------------------------------------------------------
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+          
+          int maxLen=0;
+
+          for(int i=0;i<fruits.size();i++){
+              set<int> st;
+
+              for(int j=i;j<fruits.size();j++){
+                  st.insert(fruits[j]);
+                  if(st.size()<=2) // if less than 3 different element will be there then only we will put it into maxLen
+                    maxLen=max(maxLen,j-i+1);
+              }
+          }
+
+          return maxLen;
+
+
+    }
+};
+
+
+--------------------------------------------------------------------------------  Optimise Solution   ---------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+          
+          int maxLen=0;
+          int left=0,right=0;
+          int n=fruits.size();
+          map<int,int> mp;
+
+         while(right<n){
+
+           mp[fruits[right]]++; // adding to map
+           while(mp.size()>2){ // if more than 2 ele in map then shrink the window
+              mp[fruits[left]]--;
+              if(mp[fruits[left]]==0) // if some ele has 0 freq then erase that ele
+                mp.erase(fruits[left]);
+                left++;
+           }
+
+           maxLen=max(maxLen,(right-left+1)); // update our maxLen
+            right++;
+         }
+
+          return maxLen;
+    }
+};
+
+
+---------------------------------------- Most Optimal Solution ---------------------------------------------------------------------------------------------------------------------
+here, we don't need to use while loop 
+--------------------------------------------
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+          
+          int maxLen=0;
+          int left=0,right=0;
+          int n=fruits.size();
+          map<int,int> mp;
+
+         while(right<n){
+
+           mp[fruits[right]]++; // adding to map
+          if(mp.size()>2){ // if more than 2 ele in map then shrink the window
+              mp[fruits[left]]--;
+              if(mp[fruits[left]]==0) // if some ele has 0 freq then erase that ele
+                mp.erase(fruits[left]);
+                left++;
+           }
+         if(mp.size()<=2)
+           maxLen=max(maxLen,(right-left+1)); // update our maxLen
+            right++;
+         }
+
+          return maxLen;
+    }
+};
