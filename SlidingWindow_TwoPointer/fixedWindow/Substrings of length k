@@ -1,0 +1,72 @@
+Substrings of length k with k-1 distinct elements
+Medium (GFG)
+
+Given a String S consisting only lowercase alphabets and an integer K.
+Find the count of all substrings of length K which have exactly K-1 distinct characters.
+
+
+Input:
+S = "abcc"
+K = 2
+Output:
+1
+Explanation:
+Possible substrings of length K = 2 are
+ab : 2 distinct characters
+bc : 2 distinct characters
+cc : 1 distinct character
+Only one valid substring exists {"cc"}. 
+
+
+
+Input:
+S = "aabab"
+K = 3
+Output :
+3
+
+
+
+------------------------------------  Brute Force  -------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+-----------------------------------------  Optimised Solution ---------------------------------------------------------------------------------------------------
+
+class Solution {
+  public:
+    int countOfSubstrings(string s, int k) {
+        // code here
+            
+        map<int,int> mp;
+        // creating a fixed sized (k) window
+        for(int i=0;i<k;i++)
+          mp[s[i]]++;
+          
+          int l=0,r=k-1;
+          int count=0;
+          int n=s.length();
+        
+          while(r<n){
+              
+              if(mp.size()==(k-1))
+                count++;
+                
+                mp[s[l]]--;
+                if(mp[s[l]]==0)
+                  mp.erase(s[l]);
+                  
+                  mp[s[++r]]++;
+                  l++;
+          }
+          
+          return count;
+    }
+};
+
+
+Time complexity: O(n)
+Space complexity: O(k)
