@@ -1,4 +1,4 @@
-Substrings of length k with k-1 distinct elements
+## Substrings of length k with k-1 distinct elements
 Medium (GFG)
 
 Given a String S consisting only lowercase alphabets and an integer K.
