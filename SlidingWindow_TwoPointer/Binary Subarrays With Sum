@@ -1,0 +1,49 @@
+##  930. Binary Subarrays With Sum
+Medium
+
+Given a binary array nums and an integer goal, return the number of non-empty subarrays with a sum goal.
+
+A subarray is a contiguous part of the array.
+
+Input: nums = [1,0,1,0,1], goal = 2
+Output: 4
+Explanation: The 4 subarrays are bolded and underlined below:
+[1,0,1,0,1]
+[1,0,1,0,1]
+[1,0,1,0,1]
+[1,0,1,0,1]
+
+Input: nums = [0,0,0,0,0], goal = 0
+Output: 15
+
+
+---------------------------------------------  Optimised Code --------------------------------------------------------------
+class Solution {
+public:
+      int func(vector<int>& arr, int N, int target){
+        if(target<0 ) return 0;
+        
+        int l=0,r=0;
+        int sum=0;
+        int cnt=0;
+        
+        while(r<N){
+            sum+=arr[r];
+            
+            while(sum>target){
+                sum-=arr[l];
+                l++;
+            }
+            
+            cnt+=(r-l+1);
+            r++;
+        }
+        
+        return cnt;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+         
+           // using prefixSum + currrentNumber/(sum) = target approach  and here prefixSum means currentSum - 1
+         return func(nums,nums.size(),goal) - func(nums,nums.size(),goal-1);
+    }
+};
