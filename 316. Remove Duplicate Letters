@@ -1,0 +1,65 @@
+316. Remove Duplicate Letters
+Given a string s, remove duplicate letters so that every letter appears once and only once. You must make sure your result is 
+the smallest in lexicographical order among all possible results.
+
+
+Example 1:
+
+Input: s = "bcabc"
+Output: "abc"
+Example 2:
+
+Input: s = "cbacdcbc"
+Output: "acdb"
+
+
+
+
+---------------------------------------------------   Code  (C++)  --------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+   
+    string removeDuplicateLetters(string s) {
+        
+       vector<int> lastSeenIndex(26,-1);
+    
+    // updating thr last index of the Chars
+       for(int i=0;i<s.length();i++)
+         lastSeenIndex[s[i]-'a']=i;
+    
+    vector<bool> seen(26,false);
+    stack<int> st;
+    
+  for(int i=0;i<s.length();i++){
+      int  currChar=s[i]-'a';
+      if(seen[currChar]) continue; // if this character is seen already then skip this itr
+     
+/*       condition to follow the ' smallest in lexicographical order'       */
+     // we have to check the char which is stored into the stack
+     // that top chars should be the small (if top is greater than char then remove)
+     //  if the top of stack is exist ahed in s then also remove 
+      
+       while(st.size()>0 and s[i]<st.top() and i<lastSeenIndex[st.top()-'a']){
+        seen[st.top()-'a']=false;
+        st.pop();
+      }
+
+      // pushing the char to stack and marking then as seen 
+      st.push(s[i]);
+      seen[currChar]=true;
+   }
+       
+        //  store all the chars to string 'ans' to return 
+        string ans;
+        while(!st.empty()){
+            ans+=st.top();
+            st.pop();
+        }
+
+        // reverse the string  to get the final output
+
+        reverse(ans.begin(),ans.end());
+        return ans;
+            
+    }
+};
