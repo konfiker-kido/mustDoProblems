@@ -1,0 +1,58 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void countingSort(vector<int>& nums){
+      
+      
+      // find maxVal
+      int n=nums.size();
+      int maxVal=nums[0];
+      
+      for(int i=0;i<n;i++){
+             maxVal=max(maxVal,nums[i]);
+      }
+      
+    
+      vector<int> position(maxVal+1);
+      // counting the occurance of each value
+      for(int val:nums)
+        position[val]++;
+        
+        
+        
+        // finding the positions of each value
+        for(int i=1;i<=maxVal;i++){
+            position[i]+=position[i-1];
+        }
+        
+        vector<int> sortedArr(n);
+        for(int i=n-1;i>=0;i--){
+            int val=nums[i];
+            int indexOfVal=position[val]-1;
+            position[val]--; //bcz we have placed a number
+            sortedArr[indexOfVal]=val;
+        }
+      
+      
+      for(int val:sortedArr)
+        cout<<val<<" ";
+      
+}
+
+int main()
+{
+    vector<int> nums={4,5,4,6,8,10,4,6,8,2,3,9};
+    // vector<int> nums={1,3,2,3,4,1,6,4,3};
+    
+     countingSort(nums);
+    return 0;
+}
