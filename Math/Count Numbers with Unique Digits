@@ -1,0 +1,86 @@
+357. Count Numbers with Unique Digits
+
+Medium
+Topics
+Companies
+Hint
+Given an integer n, return the count of all numbers with unique digits, x, where 0 <= x < 10n.
+
+Example 1:
+
+Input: n = 2
+Output: 91
+Explanation: The answer should be the total numbers in the range of 0 ≤ x < 100, excluding 11,22,33,44,55,66,77,88,99
+Example 2:
+
+Input: n = 0
+Output: 1
+
+
+===============================================  Naive Approach ==================================================================================================================================
+
+-> use a loop to iterate from 10 to pow(10,n)
+-> every time check that the digit of that numbers is unique or not, use hashpmap for that
+
+
+
+class Solution {
+public:
+  
+    int countNumbersWithUniqueDigits(int n) {
+        
+
+        if(n==0) return 1;
+
+        int limit=pow(10,n);
+ 
+      for(int i=0;i<limit;i++){
+            vector<int> digit(10,0);
+            bool flag=true;
+            int temp=i;
+            while(temp){
+                if(digit[temp%10]>0)
+                  {
+                    flag=false;
+                    break;
+                  }
+                  digit[temp%10]++;
+                  temp/=10;
+            }
+          if(flag)
+            count++;
+        }
+
+        return count;
+    }
+};
+
+
+==================================================  Optimised Approach ================================================================================
+
+-> use concept of P&C to find the unique numbers 
+
+class Solution {
+public:
+  
+    int countNumbersWithUniqueDigits(int n) {
+        
+
+        int limit=pow(10,n);
+
+        if(n==0) return 1; 
+        
+        int unique_digit=10;
+        int start=9;
+        int current=9;
+
+        while(n>1 and start){
+            current*=(start--);   // 9*9(for two digit number),next itr  81*8 (for three digit number), next itr 648*7 like this
+            unique_digit+=current;
+             n--;
+        }
+
+        return unique_digit;
+      
+    }
+};
