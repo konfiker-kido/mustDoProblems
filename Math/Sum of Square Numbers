@@ -1,0 +1,59 @@
+Medium
+
+Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
+
+Example 1:
+
+Input: c = 5
+Output: true
+Explanation: 1 * 1 + 2 * 2 = 5
+Example 2:
+
+Input: c = 3
+Output: false
+
+===========================================  Brute Force Approach  ==============================================================================
+
+class Solution {
+    public boolean judgeSquareSum(int c) {
+         
+    if(c==0 || c==1)  return true;
+       long l=0,r=c;
+       
+       while(l<=r){
+
+        long val=(l*l)+(r*r);
+          if(val==c)
+            return true;
+            else if(val>c)
+              r--;
+              else
+                l++;
+       } 
+       return false;
+    }
+}
+
+
+=============================================  Optimal Solution ====================================================================================
+
+ a2+b2=c
+ => b@=c-a2
+we will use this mathematical Approach
+
+==============================================
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+
+     for(long a=0;a*a<=c;a++){ // this loop taking Sqrt c
+         long b=sqrt(c-a*a); // here sqrt taking log c time complexity(here we can use the Binary search to find the Sqrt)
+         if(b*b==(c-a*a))
+           return true;
+      }
+      return false;
+    }
+};
+
+
+-> here in place of using swrt we can directly use the binary search to optimize more
