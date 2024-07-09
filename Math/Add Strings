@@ -1,0 +1,63 @@
+Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
+
+You must solve the problem without using any built-in library for handling large integers (such as BigInteger). 
+You must also not convert the inputs to integers directly.
+
+Example 1:
+
+Input: num1 = "11", num2 = "123"
+Output: "134"
+Example 2:
+
+Input: num1 = "456", num2 = "77"
+Output: "533"
+Example 3:
+
+Input: num1 = "0", num2 = "0"
+Output: "0"
+
+====================================================  C++ =================================================================================
+
+class Solution {
+public:
+   
+   
+    string addStrings(string num1, string num2) {
+        
+         reverse(num1.begin(),num1.end());
+         reverse(num2.begin(),num2.end());
+
+         int minIndex=min(num1.length(),num2.length());
+       
+         int carry=0;
+         string ans="";
+
+         for(int i=0;i<minIndex;i++){
+            int sum=(num1[i]-'0')+(num2[i]-'0')+carry;
+            ans+=to_string(sum%10); // last digit of sum will be store
+            carry=sum/10;       // leading digit will be carry
+         }
+
+// iterating through remaining digit
+         if(num1.length()>num2.length()){
+            for(int i=minIndex;i<num1.length();i++){
+                 int sum=(num1[i]-'0')+carry;
+                 ans+=to_string(sum%10);
+                 carry=sum/10;
+            }
+         }else{
+             for(int i=minIndex;i<num2.length();i++){
+                 int sum=(num2[i]-'0')+carry;
+                 ans+=to_string(sum%10);
+                 carry=sum/10;
+            }
+         }
+       
+       // eadge case (what if there is something in carry)
+       if(carry) ans+="1";
+
+      reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+
