@@ -8,17 +8,7 @@ For example, the greatest common factor of 15 and 10 is 5, since both the number
 10/5 = 2
 
 
-==============================  C++ ============================================
-
-
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
+==============================  C++  Naive Approch============================================
 #include <iostream>
 #include <limits.h>
 #include <cmath>
@@ -40,7 +30,7 @@ using namespace std;
       }
       
    int gcd=1;
-      for(int i=1;i<=maxNum/2;i++){
+      for(int i=1;i<=maxNum;i++){
         if(minNum%i==0 and maxNum%i==0){
              gcd=max(gcd,i);
         }
@@ -54,3 +44,30 @@ int main()
 
     return 0;
 }
+
+=================================  Euclid Method =======================================================================
+
+a=24  => 2 *  2 * 2 *3
+b=42  =>  2 * 3 * 7       
+=>  HCF 6 (GCD)
+
+
+if we 
+42 - 24 = 18  (GCD of 24 and 16 will be same as 42 and 24)
+24 - 18  = 6   the same way we can do, 42 % 12 = 6 
+18 - 6 =  12
+12 - 6 =   6
+6 - 6  =   0
+
+
+========================  c++ optimized solution ========================
+
+int gcd(int a, int b){
+
+   while(b){
+     int rem=a%b;
+     a=b;
+     b=rem; 
+} 
+return a;
+
