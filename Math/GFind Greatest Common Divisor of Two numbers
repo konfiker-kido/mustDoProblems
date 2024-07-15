@@ -1,0 +1,56 @@
+
+The greatest common divisor (GCD) of two or more numbers is the greatest common factor number that divides them, exactly. 
+It is also called the highest common factor (HCF). 
+For example, the greatest common factor of 15 and 10 is 5, since both the numbers can be divided by 5.
+
+15/5 = 3
+
+10/5 = 2
+
+
+==============================  C++ ============================================
+
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <limits.h>
+#include <cmath>
+using namespace std;
+
+
+ int gcdNumber(int a,int b){
+     
+      int minNum=INT_MAX;
+      int maxNum=INT_MIN;
+     
+      if(a>b)
+      {
+        maxNum=a;
+        minNum=b;
+      }else{
+           maxNum=b;
+           minNum=a;
+      }
+      
+   int gcd=1;
+      for(int i=1;i<=maxNum/2;i++){
+        if(minNum%i==0 and maxNum%i==0){
+             gcd=max(gcd,i);
+        }
+      }
+      return gcd;
+  }
+
+int main()
+{
+    cout<<gcdNumber(15,10);
+
+    return 0;
+}
