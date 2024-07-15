@@ -1,0 +1,84 @@
+First and Last Occurrences
+
+Given a sorted array arr containing n elements with possibly some duplicate, the task is to find the first and last occurrences of an element x in the given array.
+Note: If the number x is not found in the array then return both the indices as -1.
+
+Input:
+n=9, x=5
+arr[] = { 1, 3, 5, 5, 5, 5, 67, 123, 125 }
+Output:  
+2 5
+Explanation: 
+First occurrence of 5 is at index 2 and last occurrence of 5 is at index 5. 
+
+Input:
+n=9, x=7
+arr[] = { 1, 3, 5, 5, 5, 5, 7, 123, 125 }
+Output:  
+6 6
+Explanation: 
+First and last occurrence of 7 is at index 6.
+
+
+==========================================================================  Naive Approach O(N) using two pointers ===========================================
+
+class Solution
+{
+    public:
+    vector<int> find(int arr[], int n , int x )
+    {
+        // code here
+        int s=0,e=n-1;
+        while(s<=e){
+            if(arr[s]==x and arr[e]==x) return {s,e};
+            if(arr[s]!=x) s++;
+            if(arr[e]!=x) e--;
+        }
+        return {-1,-1};
+    }
+};
+
+======================================================  Optimsed Using Binary Search (log N) ========================================================
+
+class Solution
+{
+    public:
+    vector<int> find(int arr[], int n , int x )
+    {
+        // code here
+        int s=0,e=n-1;
+        // finding the first part
+        int first=-1,second=-1;
+        int mid=s+(e-s)/2;
+        while(s<=e){
+          if(arr[mid]==x){
+              // go to the left part
+              e=mid-1;
+              first=mid;
+          }else if(arr[mid]>x) e=mid-1;
+           else s=mid+1;
+           
+           mid=s+(e-s)/2;
+        }
+        
+        // when x element not found
+        if(first==-1) return {-1,-1};
+        
+        s=0,e=n-1,mid=s+(e-s)/2;
+        while(s<=e){
+            if(arr[mid]==x){
+              // go to the right part
+              s=mid+1;
+              second=mid;
+          }else if(arr[mid]>x) e=mid-1;
+          else s=mid+1;
+          
+          mid=s+(e-s)/2;
+        }
+        
+        return {first,second};
+        
+    }
+};
+
+
