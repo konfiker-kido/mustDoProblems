@@ -31,15 +31,15 @@ public:
     int peakIndexInMountainArray(vector<int>& arr) {
         int start=0,end=arr.size()-1;
         int mid=start+(end-start)/2;;
-        while(start<end){ 
-            if(arr[mid]<arr[mid+1]){
+        while(start<end){  // we have to traverse all the elements till start!=end
+            if(arr[mid]<arr[mid+1]){ // tracking the peak
                 start=mid+1;
             }
             else{
-                end=mid;
+                end=mid; // mid can be peak as well that's why not doing e=mid+1
             }
              mid=start+(end-start)/2;
         }
-        return start;
+        return start; // returning the index of peak element, can be return the end as well bcz both on the peak
     }
 };
