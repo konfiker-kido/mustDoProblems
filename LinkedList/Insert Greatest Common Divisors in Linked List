@@ -1,0 +1,56 @@
+2807. Insert Greatest Common Divisors in Linked List
+
+Given the head of a linked list head, in which each node contains an integer value.
+
+Between every pair of adjacent nodes, insert a new node with a value equal to the greatest common divisor of them.
+
+Return the linked list after insertion
+
+Input: head = [18,6,10,3]
+Output: [18,6,6,2,10,1,3]
+
+
+Input: head = [7]
+Output: [7]
+
+
+======================================= c++ code =================================================================
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        
+
+      if(head==NULL or head->next==NULL) return head;
+       
+
+        ListNode* current=head;
+
+        while(current!=NULL and current->next!=NULL){         
+          
+          // finding GCD 
+            int gcd=__gcd(current->val,current->next->val);
+            //creating a New Node with gcd
+            ListNode* newNode=new ListNode(gcd);
+
+            //1. attach current next to current next (Order is important here, *dry run )
+            newNode->next=current->next;
+            //2. attach this node to temp->next
+            current->next=newNode;
+
+            // move the pointer 
+            current=newNode->next;
+        }
+        return head;
+
+    }
+};
