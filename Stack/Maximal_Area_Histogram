@@ -1,0 +1,75 @@
+85. Maximal Rectangle
+Hard
+
+Given a rows x cols binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
+
+Input: matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]
+Output: 6
+Explanation: The maximal rectangle is shown in the above picture.
+Example 2:
+
+Input: matrix = [["0"]]
+Output: 0
+Example 3:
+
+Input: matrix = [["1"]]
+Output: 1
+
+===========================================  C++ Solution =====================================================
+
+=> we have keep track of prefix sum of each bar vertically
+and then find the area of histogram row wise
+
+======================
+
+class Solution {
+public:
+   int maxHistogram(vector<int> arr){
+
+       stack<int> st;
+         int ans=0;
+         int n=arr.size();
+         for(int i=0;i<n;i++){
+            while(!st.empty() and arr[st.top()]>=arr[i]){
+                int ele=st.top();
+                st.pop();
+                int nse=i;
+                int pse=st.empty()?-1:st.top();
+                ans=max(ans,arr[ele]*(nse-pse-1));
+            } 
+            st.push(i);
+         }
+         
+         
+         while(!st.empty()){
+              
+              int nse=n;
+              int ele=st.top(); st.pop();
+              int pse=st.empty()?-1:st.top();
+              ans=max(ans,arr[ele]*(nse-pse-1));
+         }
+         return ans;
+   }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+         
+           vector<vector<int>> prefix(matrix.size(),vector<int> (matrix[0].size()));
+            int n=matrix.size();
+             for(int j=0;j<matrix[0].size();j++)
+             {
+                  int sum=0;
+                  for(int i=0;i<matrix.size();i++){
+                      sum+=matrix[i][j]-'0';
+                      if(matrix[i][j]=='0') sum=0;
+                      prefix[i][j]=sum;
+                  }
+             }
+
+             int ans=0;
+
+             for(int i=0;i<prefix.size();i++){
+                 ans=max(ans,maxHistogram(prefix[i]));
+             }
+
+             return ans;
+    }
+};
