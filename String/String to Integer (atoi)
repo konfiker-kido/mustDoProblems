@@ -1,0 +1,48 @@
+8. String to Integer (atoi)
+Medium
+
+Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
+
+The algorithm for myAtoi(string s) is as follows:
+
+Whitespace: Ignore any leading whitespace (" ").
+Signedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity is neither present.
+Conversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.
+Rounding:   If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231,
+and integers greater than 231 - 1 should be rounded to 231 - 1.
+
+
+=========================================================================== C++ ===========================================================================
+
+class Solution {
+public:
+  bool isDigit(char ch){
+       if(ch>='0' and ch<='9') return true;
+       return false;
+  }
+    int myAtoi(string s) {
+         
+         int len=s.length();
+         int i=0;
+         while(s[i]==' ') i++; // removing the whitespaces
+         s=s.substr(i);
+         
+         int sign=1;
+         if(s[0]=='-') sign =-1;
+        
+         i=(s[0]=='+' or s[0]=='-')?1:0; // placing the index iterator
+         long ans=0;
+         
+         while(i<len){
+            // if char is not digit then break;
+             if(s[i]==' ' or !isDigit(s[i])) break;
+
+             ans=(ans*10)+s[i]-'0';
+             if((ans*sign)>INT_MAX) return INT_MAX; // if exceeds the INT_MAX
+             if((ans*sign)<INT_MIN) return INT_MIN;// if exceeds the INT_MIN
+            i++;
+         }
+       return (int)(sign*ans);
+    }
+    
+};
