@@ -1,0 +1,87 @@
+2284. Sender With Largest Word Count
+
+You have a chat log of n messages. You are given two string arrays messages and senders where messages[i] is a message sent by senders[i].
+
+A message is list of words that are separated by a single space with no leading or trailing spaces. 
+The word count of a sender is the total number of words sent by the sender. Note that a sender may send more than one message.
+
+Return the sender with the largest word count. If there is more than one sender with the largest word count,
+return the one with the lexicographically largest name.
+
+
+====================  Brute Force Solution ======================================================================
+
+class Solution {
+public:
+    static bool cmp(pair<string,int> a,pair<string,int> b){
+         if(a.second>b.second) return true;
+         else if( a.second==b.second){
+             return (a.first>b.first);
+         }
+         return false;
+    }
+    string largestWordCount(vector<string>& messages, vector<string>& senders) {
+          
+      
+           int itr=0;
+           vector<pair<string,int>> vp;
+          for(string str:messages){
+              int count=0;
+              string s="";
+              int n=str.length();
+              for(int i=0;i<n;i++){
+                char ch=str[i];
+                  if(ch==' ' or i==n-1){
+                      count++;
+                      s="";
+                  }else s+=ch;
+              }
+                string sender=senders[itr++];
+                mp[sender]+=count;
+            }
+           
+            
+            for(auto it=mp.begin();it!=mp.end();it++){
+                  vp.push_back({it->first,it->second});
+            }
+
+            sort(vp.begin(),vp.end(),cmp);   
+          return vp[0].first;
+    }
+};
+
+
+
+
+
+================================  Optimal Solution ====================================================================
+
+
+
+
+
+
+class Solution {
+public:
+  
+string largestWordCount(vector<string>& messages, vector<string>& senders) {
+           
+     unordered_map<string,int> mp;
+            string ans="";  // used to store the senders
+            int maxWords=INT_MIN;
+            int n=messages.size();
+            for(int i=0;i<n;i++){
+               mp[senders[i]]+=count(messages[i].begin(),messages[i].end(),' ')+1; // counting the spaces bcz words = spaces+1
+               if(mp[senders[i]]==maxWords){ // if number of words is equal to the last largest
+                  ans=max(ans,senders[i]);  // store the sender word which is lexiographically large 
+               }else if(mp[senders[i]]>maxWords){ // if number of words is greater then store the sender[i] to ans
+                  ans=senders[i];
+                  maxWords=mp[senders[i]];
+               }
+            }
+            return ans;     
+    }
+};
+
+
+
