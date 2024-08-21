@@ -1,0 +1,57 @@
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+// comparing the values and pushing into the arr
+void merge(vector<int>& arr,int l,int mid,int h){
+    
+    int left=l;
+    int right=mid+1;
+    
+    vector<int> temp;
+    while(left<=mid and right<=h){
+        if(arr[left]<=arr[right])
+          temp.push_back(arr[left++]);
+         else
+            temp.push_back(arr[right++]);
+    }
+    
+    while(left<=mid){
+         temp.push_back(arr[left++]);
+    }
+    
+    while(right<=h){
+        temp.push_back(arr[right++]);
+    }
+    
+// replacing the temp data to original arr
+    for(int i=l;i<=h;i++){ arr[i]=temp[i-l];} 
+   
+  
+}
+
+void mergeSort(vector<int> &arr,int l,int h){
+    
+       // base case
+       if( l==h ) return;
+       int mid=(l+h)/2; // pointing out the mid index
+       
+       // spliting the first array
+      mergeSort(arr,l,mid);    // from 0 index to mid
+      mergeSort(arr,mid+1,h); // from mid+1 index to high
+      // merging the sorted arr
+      merge(arr,l,mid,h);
+      
+}
+
+int main()
+{
+  vector<int> arr={12,23,5,3,1,20,56,73};
+//   vector<int> arr={3,2,4,1,3};
+   mergeSort(arr,0,arr.size()-1);
+
+    return 0;
+}
