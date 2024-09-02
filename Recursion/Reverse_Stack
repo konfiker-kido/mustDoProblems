@@ -1,0 +1,54 @@
+You are given a stack St. You have to reverse the stack using recursion.
+
+Example 1:
+
+Input:
+St = {3,2,1,7,6}
+Output:
+{6,7,1,2,3}
+Explanation:
+Input stack after reversing will look like the stack in the output.
+
+
+
+======================================================  Without using the Extra Space =======================================================
+
+class Solution{
+public:
+
+   void pushAtBtottom(stack<int> &st,int val){
+         if(st.size()==0){
+               st.push(val);// inserting at the bottom of stack
+               return;
+         }
+         
+         int temp=st.top();
+         st.pop();
+         pushAtBtottom(st,val);
+         
+         // restor the stack by pushing the removed element
+         st.push(temp);
+         
+   }
+
+     void func(stack<int> & st){
+         
+         if(st.empty())
+           return;
+           
+           int temp=st.top(); // storing the top before removing from stack
+           st.pop(); // remove the top
+           
+           
+           func(st); // call stack
+           pushAtBtottom(st,temp); // push temp to the bottom of the stack
+         
+     }
+    void Reverse(stack<int> &st){
+         
+         stack<int> temp;
+         func(st);
+         
+    }
+};
+
