@@ -30,7 +30,7 @@ class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
         int start=0,end=arr.size()-1;
-        int mid=start+(end-start)/2;;
+        int mid=start+(end-start)/2;
         while(start<end){  // we have to traverse all the elements till start!=end
             if(arr[mid]<arr[mid+1]){ // tracking the peak
                 start=mid+1;
