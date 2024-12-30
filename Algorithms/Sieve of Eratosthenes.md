@@ -13,7 +13,7 @@ Given an integer `n`, return the number of prime numbers that are strictly less 
 `4`
 
 **Explanation:**  
-There are 4 prime numbers less than 10: 2, 3, 5, 7.
+There are 4 prime numbers less than 10:   `2`, `3`, `5`, `7`.
 
 ---
 
