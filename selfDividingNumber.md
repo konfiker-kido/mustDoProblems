@@ -1,117 +1,112 @@
-# Self Dividing Numbers Solution
+# 2553. Separate the Digits in an Array
 
 ## Problem Statement
 
-A self-dividing number is a number that is divisible by every digit it contains. A self-dividing number is not allowed to contain the digit zero.
+Given an array of integers nums, we need to separate the digits in each number and return them as a single list in the same order. 
+The digits of each number should appear one by one.
 
-For example:
-- `128` is a self-dividing number because:
-  - 128 % 1 == 0
-  - 128 % 2 == 0
-  - 128 % 8 == 0
-- `128` is **self-dividing**.
-
-A number like `101` is **not** self-dividing because it contains a `0`, and dividing by zero is not allowed.
-
-Given two integers `left` and `right`, return a list of all the self-dividing numbers in the inclusive range `[left, right]`.
-
-### Input
-- `left = 1`
-- `right = 22`
-
-### Output
+### Input:
 ```text
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
+nums = [13, 25, 83, 77]
 ```
 
-## Approach
-### Check if a number is self-dividing:
+Output:
+text
+Copy code
+[1, 3, 2, 5, 8, 3, 7, 7]
+``Input
+nums = [7, 1, 3, 9]
+Output:
+[7, 1, 3, 9]
+```
+Approach
+Separate the Digits:
+For each number in the array:
 
-For each number in the given range, we need to check if every digit of the number divides the number itself.
-A number cannot contain a 0 digit, as dividing by 0 is not allowed.
-Iterate through the range:
+Extract the digits by repeatedly using modulus and integer division.
+Store the digits in the result array.
+After processing all numbers, reverse the result array to maintain the correct order of digits.
 
-For each number in the range **[left, right]**, check if it is a self-dividing number by using the helper function checkDigit().
-If the number is self-dividing, add it to the result list.
-Return the result list.
-
-Solution Code
+```
+Solution Code:
 ```cpp
 class Solution {
 public:
-    // Helper function to check if a number is self-dividing
-    bool checkDigit(int num) {
-        int original = num;  // Preserve original value to use for modulus check
-        while (num > 0) {
-            int digit = num % 10;
-            // Check if the digit is zero or if num is not divisible by the digit
-            if (digit == 0 || original % digit != 0) {
-                return false;
-            }
-            num /= 10;
-        }
-        return true;
-    }
-
-    // Main function to find all self-dividing numbers in the range [left, right]
-    vector<int> selfDividingNumbers(int left, int right) {
+    vector<int> separateDigits(vector<int>& nums) {
         vector<int> ans;
 
-        // Iterate through all numbers in the range [left, right]
-        for (int i = left; i <= right; i++) {
-            if (checkDigit(i)) {
-                ans.push_back(i);  // Add self-dividing number to the result list
+        // Iterate over each number in nums in reverse order
+        for(int i = nums.size() - 1; i >= 0; i--) {
+            int val = nums[i];
+            
+            // Extract digits of the current number
+            while(val > 0) {
+                ans.push_back(val % 10); // Push the last digit
+                val /= 10; // Remove the last digit
             }
         }
-
+        
+        // Reverse the result vector to maintain correct digit order
+        reverse(ans.begin(), ans.end());
+        
         return ans;
+        
+        // Second Method Using string:
+        // for(int i = 0; i < nums.size(); i++) {
+        //     string num = to_string(nums[i]);
+        //     for(int j = 0; j < num.size(); j++) {
+        //         res.push_back(num[j] - '0');
+        //     }
+        // }
     }
 };
-
 ```
-## Explanation
-checkDigit() function:
-This function takes an integer num and checks if it is a self-dividing number. It works as follows:
-
-1. It stores the original value of num in original.
-2. It then loops through each digit of num. If a digit is 0, the number is not self-dividing, and the function returns false.
-3. If the digit divides the number without a remainder, it proceeds to check the next digit.
-4. If all digits divide the number, it returns true, indicating the number is self-dividing.
-selfDividingNumbers() function:
-This function iterates through each number in the range [left, right] and calls the checkDigit() function to verify if it's a self-dividing number. If it is, it adds the number to the result vector ans. After iterating through the entire range, the function returns the list of self-dividing numbers.
-
-## Time Complexity
-The time complexity of the checkDigit() function is O(d), where d is the number of digits in the number num.
-The selfDividingNumbers() function iterates through all numbers in the range [left, right], making the overall time complexity O(n * d), where n is the size of the range and d is the average number of digits in the numbers in the range.
-Thus, the time complexity is linear with respect to the number of numbers in the range and the number of digits in each number.
-
+## Explanation:
+- The function separateDigits() takes an array nums as input.
+- For each number, its digits are extracted using modulus and division, and the digits are added to a result list ans.
+- Since digits are collected in reverse order, the list is reversed at the end to ensure the correct order.
+- A second approach using strings is provided in the comments, where each number is converted to a string, and the digits are converted back to integers.
+**Time Complexity**
+- The time complexity of the solution is **O(n * m)**,
+  where n is the number of integers in the nums array, and m is the average number of digits in each number. For each number, we iterate through its digits.
 Example Walkthrough
-## Example 1
-```
+
+## Example 1:
+
 Input:
-left = 1, right = 22
 ```
-Execution:
-The function iterates from 1 to 22.
-The self-dividing numbers in this range are: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22].
+nums = [13, 25, 83, 77]
+```
+### Execution:
+```
+Number 13 → Digits [1, 3]
+Number 25 → Digits [2, 5]
+Number 83 → Digits [8, 3]
+Number 77 → Digits [7, 7]
+```
+After processing, the result is: [1, 3, 2, 5, 8, 3, 7, 7].
 
-```
 Output:
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
+
+```text
+[1, 3, 2, 5, 8, 3, 7, 7]
 ```
-## Example 2
-```
+## Example 2:
 Input:
-left = 47, right = 85
+
+```text
+nums = [7, 1, 3, 9]
 ```
-Execution:
-The function iterates from 47 to 85.
-The self-dividing numbers in this range are: [48, 55, 66, 77].
+### Execution:
 ```
-Output:
-[48, 55, 66, 77]
+Number 7 → Digits [7]
+Number 1 → Digits [1]
+Number 3 → Digits [3]
+Number 9 → Digits [9]
+After processing, the result is: [7, 1, 3, 9].
 ```
 
-
-
-
+# Output:
+```text
+[7, 1, 3, 9]
+```
