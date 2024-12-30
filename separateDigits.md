@@ -1,11 +1,23 @@
 # 2553. Separate the Digits in an Array
 
-# Input: nums = [13,25,83,77]
-# Output: [1,3,2,5,8,3,7,7]
-
-# Input: nums = [7,1,3,9]
-# Output: [7,1,3,9]
-
+#### Input:
+```
+nums = [13,25,83,77]
+```
+#### Output: 
+```
+[1,3,2,5,8,3,7,7]
+```
+#### Input 2: 
+```
+nums = [7,1,3,9]
+```
+# Output:
+```
+[7,1,3,9]
+```
+C++ Code
+```cpp
 class Solution {
 public:
     vector<int> separateDigits(vector<int>& nums) {
@@ -31,3 +43,5 @@ public:
             // } 
     }
 };
+
+```
