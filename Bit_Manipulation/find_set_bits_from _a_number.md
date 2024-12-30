@@ -1,13 +1,20 @@
+# Find Set Bit's From  A Number
+
+```
+
 N = 6
+```
+```
 Output:
 2
-Explanation:
-Binary representation is '110' 
-So the count of the set bit is 2.
+```
+## Explanation
+- Binary representation is '110' 
+- So the count of the set bit is 2.
 
 
--------------------------------------------  Code ---------------------------------------------------------------------------------------------
-
+# C++ Code
+```cpp
 int countSetBits(int number){
 
    int count=0;
@@ -21,3 +28,4 @@ int countSetBits(int number){
    }
   return count;
 }
+```
