@@ -5,31 +5,31 @@
 Given an array of integers nums, we need to separate the digits in each number and return them as a single list in the same order. 
 The digits of each number should appear one by one.
 
-### Input:
+#### Input 1:
 ```text
 nums = [13, 25, 83, 77]
 ```
 
-Output:
-text
-Copy code
+#### Output :
+```
 [1, 3, 2, 5, 8, 3, 7, 7]
-``Input
+```
+#### Input 2:
+```
 nums = [7, 1, 3, 9]
-Output:
+```
+#### Output:
+```
 [7, 1, 3, 9]
 ```
-Approach
-Separate the Digits:
-For each number in the array:
+## Approach
+- Separate the Digits For each number in the array
+- Extract the digits by repeatedly using modulus and integer division.
+- Store the digits in the result array.
+- After processing all numbers, reverse the result array to maintain the correct order of digits.
 
-Extract the digits by repeatedly using modulus and integer division.
-Store the digits in the result array.
-After processing all numbers, reverse the result array to maintain the correct order of digits.
-
-```
-Solution Code:
-```cpp
+## Solution Code:
+``` cpp
 class Solution {
 public:
     vector<int> separateDigits(vector<int>& nums) {
